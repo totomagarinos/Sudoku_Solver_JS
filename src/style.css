@@ -1,1 +1,35 @@
+* {
+  background-color: #aaa;
+}
 
+.container {
+  font-family: sans-serif;
+  max-width: 1400px;
+  margin: 40px auto;
+  text-align: center;
+}
+
+.board {
+  width: 400px;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  margin: 0 auto;
+}
+
+.cell {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #000;
+  border-radius: 4px;
+}
+
+.solve-button {
+  font-size: 1rem;
+  padding: 14px;
+  margin-top: 20px;
+  border: none;
+  border-radius: 12px;
+  background-color: #000b;
+  color: #f4f4f4;
+  cursor: pointer;
+}
