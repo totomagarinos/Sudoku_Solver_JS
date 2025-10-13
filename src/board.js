@@ -1,6 +1,7 @@
-function createBoard() {
-  const board = document.getElementById("sudoku-board");
-  board.className = "board";
+import { isSolvedCorrectly } from "./solver";
+
+export function createBoard() {
+  const board = document.getElementById("board");
 
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
@@ -16,6 +17,19 @@ function createBoard() {
         if (e.target.value) {
           const next = e.target.nextElementSibling;
           if (next) next.focus();
+
+          const allFilled = Array.from(
+            document.querySelectorAll(".cell")
+          ).every((input) => input.value !== "");
+
+          if (allFilled) {
+            const board = getBoardValues();
+            if (isSolvedCorrectly(board)) {
+              showMessage("Sudoku resuelto correctamente!", "success");
+            } else {
+              showMessage("Hay errores en el Sudoku", "error");
+            }
+          }
         }
       });
       board.appendChild(input);
@@ -23,7 +37,11 @@ function createBoard() {
   }
 }
 
-function getBoardValues() {
+export function isBoardEmpty(board) {
+  return board.flat().every((cell) => cell === 0);
+}
+
+export function getBoardValues() {
   const boardArray = Array.from({ length: 9 }, () => Array(9).fill(0));
   const inputs = document.querySelectorAll(".cell");
 
@@ -37,7 +55,7 @@ function getBoardValues() {
   return boardArray;
 }
 
-function displaySolution(solvedBoard) {
+export function displaySolution(solvedBoard) {
   const inputs = document.querySelectorAll(".cell");
 
   inputs.forEach((input) => {
@@ -46,10 +64,12 @@ function displaySolution(solvedBoard) {
     input.value = solvedBoard[row][col];
   });
 
+  showMessage("Sudoku resuelto!", "success");
+
   return solvedBoard;
 }
 
-function autoCompleteBoard() {
+export function autoCompleteBoard() {
   const defaultBoard = [
     [5, 3, 0, 0, 7, 0, 0, 0, 0],
     [6, 0, 0, 1, 9, 5, 0, 0, 0],
@@ -75,6 +95,26 @@ function autoCompleteBoard() {
       input.value = "";
     }
   });
+
+  showMessage("Ejemplo cargado", "info");
 }
 
-export { createBoard, getBoardValues, displaySolution, autoCompleteBoard };
+export function cleanBoard() {
+  const inputs = document.querySelectorAll(".cell");
+
+  inputs.forEach((input) => {
+    input.value = "";
+  });
+
+  showMessage("Tablero limpiado", "info");
+}
+
+export function showMessage(text, type) {
+  const msg = document.getElementById("statusMessage");
+  msg.textContent = text;
+  msg.className = `status-message ${type} show`;
+
+  setTimeout(() => {
+    msg.classList.remove("show");
+  }, [3000]);
+}

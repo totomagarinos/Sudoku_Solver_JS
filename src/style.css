@@ -1,37 +1,237 @@
 * {
-  background-color: #aaa;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
 }
 
 .container {
-  font-family: sans-serif;
-  max-width: 1400px;
-  margin: 40px auto;
-  text-align: center;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 600px;
+  width: 100%;
+  animation: fadeIn 0.5s ease-out;
 }
 
-.board {
-  width: 400px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  text-align: center;
+  color: #667eea;
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+  font-size: 0.95rem;
+}
+
+.board-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.sudoku-board {
   display: grid;
   grid-template-columns: repeat(9, 1fr);
-  margin: 0 auto;
+  gap: 0;
+  background: #2d3748;
+  padding: 4px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .cell {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #cbd5e0;
+  background: white;
   text-align: center;
-  font-weight: bold;
-  border: 1px solid #000;
-  border-radius: 4px;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #2d3748;
+  transition: all 0.2s ease;
+  outline: none;
 }
 
-.button {
+.cell:hover {
+  background: #edf2f7;
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+.cell:focus {
+  background: #e6fffa;
+  border: 2px solid #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+.cell:nth-child(9n + 3),
+.cell:nth-child(9n + 6) {
+  border-right: 3px solid #2d3748;
+}
+
+.cell:nth-child(n + 19):nth-child(-n + 27),
+.cell:nth-child(n + 46):nth-child(-n + 54) {
+  border-bottom: 3px solid #2d3748;
+}
+
+.cell:first-child {
+  border-top-left-radius: 8px;
+}
+
+.cell:nth-child(9) {
+  border-top-right-radius: 8px;
+}
+
+.cell:nth-child(73) {
+  border-bottom-left-radius: 8px;
+}
+
+.cell:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.button-group {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+button {
+  color: #fff;
+  padding: 14px 28px;
   font-size: 1rem;
-  padding: 14px;
-  margin-top: 20px;
+  font-weight: 600;
   border: none;
   border-radius: 12px;
-  background-color: #000b;
-  color: #f4f4f4;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex: 1;
+  min-width: 140px;
+}
+
+.solve-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.solve-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.solve-btn:active {
+  transform: translateY(0);
+}
+
+.auto-complete-btn {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.auto-complete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
+}
+
+.reset-btn {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.reset-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(79, 172, 254, 0.4);
+}
+
+.status-message {
+  text-align: center;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 500;
+  margin-top: 15px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.status-message.show {
+  opacity: 1;
+}
+
+.status-message.success {
+  background: #c6f6d5;
+  color: #22543d;
+}
+
+.status-message.error {
+  background: #fed7d7;
+  color: #742a2a;
+}
+
+.status-message.info {
+  background: #bee3f8;
+  color: #2c5282;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .cell {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+  }
+
+  button {
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    min-width: 110px;
+  }
+}
+
+@media (max-width: 400px) {
+  .cell {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
 }

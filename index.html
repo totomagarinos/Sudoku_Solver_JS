@@ -9,11 +9,26 @@
   </head>
   <body>
     <div class="container">
-      <h1 class="title">Sudoku</h1>
-      <div id="sudoku-board"></div>
-      <button id="auto-complete-button" class="button">Autocompletar</button>
-      <button id="solve-button" class="button">Resolver</button>
+      <h1 class="title">Sudoku Solver</h1>
+      <p class="subtitle">Juega o resuelve cualquier Sudoku</p>
+
+      <div class="board-container">
+        <div class="sudoku-board" id="board"></div>
+      </div>
+
+      <div class="controls">
+        <div class="button-group">
+          <button class="auto-complete-btn" id="autoCompleteButton">
+            Cargar Ejemplo
+          </button>
+          <button class="reset-btn" id="resetButton">Limpiar</button>
+        </div>
+        <button class="solve-btn" id="solveButton">Resolver Sudoku</button>
+      </div>
+
+      <div id="statusMessage"></div>
     </div>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

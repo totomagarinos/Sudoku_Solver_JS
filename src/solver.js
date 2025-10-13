@@ -1,4 +1,4 @@
-function findEmpty(board) {
+export function findEmpty(board) {
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
       if (board[row][col] === 0) {
@@ -9,7 +9,7 @@ function findEmpty(board) {
   return null;
 }
 
-function isValid(board, row, col, number) {
+export function isValid(board, row, col, number) {
   for (let c = 0; c < 9; c++) {
     if (board[row][c] === number) return false;
   }
@@ -32,7 +32,7 @@ function isValid(board, row, col, number) {
   return true;
 }
 
-function solveSudoku(board) {
+export function solveSudoku(board) {
   const emptyCell = findEmpty(board);
 
   if (!emptyCell) {
@@ -56,4 +56,48 @@ function solveSudoku(board) {
   return false;
 }
 
-export { findEmpty, isValid, solveSudoku };
+export function isSolvedCorrectly(board) {
+  const emptyCell = findEmpty(board);
+
+  if (emptyCell) {
+    return false;
+  }
+
+  for (let row = 0; row < 9; row++) {
+    const nums = new Set();
+    for (let col = 0; col < 9; col++) {
+      const value = board[row][col];
+
+      if (nums.has(value)) return false;
+      nums.add(value);
+    }
+  }
+
+  for (let col = 0; col < 9; col++) {
+    const nums = new Set();
+    for (let row = 0; row < 9; row++) {
+      const value = board[row][col];
+
+      if (nums.has(value)) return false;
+      nums.add(value);
+    }
+  }
+
+  for (let boxRow = 0; boxRow < 3; boxRow++) {
+    for (let boxCol = 0; boxCol < 3; boxCol++) {
+      const nums = new Set();
+
+      for (let i = 0; i < 3; i++) {
+        for (let j = 0; j < 3; j++) {
+          const row = boxRow * 3 + i;
+          const col = boxCol * 3 + j;
+          const value = board[row][col];
+          if (nums.has(value)) return false;
+          nums.add(value);
+        }
+      }
+    }
+  }
+
+  return true;
+}
