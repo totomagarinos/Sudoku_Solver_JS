@@ -14,9 +14,20 @@ export function createBoard() {
       input.dataset.col = col;
       input.addEventListener("input", (e) => {
         e.target.value = e.target.value.replace(/[^1-9]/g, "");
-        if (e.target.value) {
-          const next = e.target.nextElementSibling;
-          if (next) next.focus();
+        const value = e.target.value;
+        const rowIdx = parseInt(input.dataset.row);
+        const colIdx = parseInt(input.dataset.col);
+
+        if (value) {
+          const board = getBoardValues();
+
+          if (!numberIsValid(board, rowIdx, colIdx, value)) {
+            input.classList.add("invalid");
+          } else {
+            input.classList.remove("invalid");
+            const next = e.target.nextElementSibling;
+            if (next) next.focus();
+          }
 
           const allFilled = Array.from(
             document.querySelectorAll(".cell")
@@ -39,6 +50,31 @@ export function createBoard() {
 
 export function isBoardEmpty(board) {
   return board.flat().every((cell) => cell === 0);
+}
+
+export function numberIsValid(board, row, col, number) {
+  const num = Number(number);
+
+  for (let c = 0; c < 9; c++) {
+    if (c !== col && board[row][c] === num) return false;
+  }
+
+  for (let r = 0; r < 9; r++) {
+    if (r !== row && board[r][col] === num) return false;
+  }
+
+  const rowStart = Math.floor(row / 3) * 3;
+  const colStart = Math.floor(col / 3) * 3;
+
+  for (let i = 0; i < 3; i++) {
+    for (let j = 0; j < 3; j++) {
+      const r = rowStart + i;
+      const c = colStart + j;
+      if ((r !== row || c !== col) && board[r][c] === num) return false;
+    }
+  }
+
+  return true;
 }
 
 export function getBoardValues() {
@@ -91,8 +127,12 @@ export function autoCompleteBoard() {
 
     if (value !== 0) {
       input.value = value;
+      input.classList.add("fixed");
+      input.readOnly = true;
     } else {
       input.value = "";
+      input.classList.remove("fixed");
+      input.readOnly = false;
     }
   });
 
@@ -104,6 +144,7 @@ export function cleanBoard() {
 
   inputs.forEach((input) => {
     input.value = "";
+    input.classList.remove("fixed");
   });
 
   showMessage("Tablero limpiado", "info");

@@ -119,6 +119,20 @@ h1 {
   border-bottom-right-radius: 8px;
 }
 
+.cell.fixed {
+  color: #1976d2;
+  font-weight: bold;
+  background-color: #eef5ff;
+}
+
+.cell.invalid {
+  color: #b71c1c;
+  background-color: #ffebee;
+  border: 2px solid #f44336;
+  box-shadow: 0 6px 16px rgba(244, 67, 54, 0.18),
+    0 0 0 4px rgba(244, 67, 54, 0.06);
+}
+
 .controls {
   display: flex;
   flex-direction: column;
