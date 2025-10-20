@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -18,9 +18,12 @@
 
       <div class="controls">
         <div class="button-group">
-          <button class="auto-complete-btn" id="autoCompleteButton">
-            Cargar Ejemplo
-          </button>
+          <select class="load-example-btn" id="loadExampleButton">
+            <option value="">-- Cargar tablero --</option>
+            <option value="facil">Fácil</option>
+            <option value="medio">Medio</option>
+            <option value="dificil">Difícil</option>
+          </select>
           <button class="reset-btn" id="resetButton">Limpiar</button>
         </div>
         <button class="solve-btn" id="solveButton">Resolver Sudoku</button>

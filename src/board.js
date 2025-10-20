@@ -3,6 +3,13 @@ import { isSolvedCorrectly } from "./solver";
 export function createBoard() {
   const board = document.getElementById("board");
 
+  let savedBoard;
+  try {
+    savedBoard = JSON.parse(localStorage.getItem("sudokuBoard"));
+  } catch (e) {
+    savedBoard = null;
+  }
+
   for (let row = 0; row < 9; row++) {
     for (let col = 0; col < 9; col++) {
       const input = document.createElement("input");
@@ -12,6 +19,12 @@ export function createBoard() {
       input.pattern = "[1-9]";
       input.dataset.row = row;
       input.dataset.col = col;
+
+      if (savedBoard && savedBoard[row][col]) {
+        input.value = savedBoard[row][col];
+        input.classList.add("fixed");
+      }
+
       input.addEventListener("input", (e) => {
         e.target.value = e.target.value.replace(/[^1-9]/g, "");
         const value = e.target.value;
@@ -28,6 +41,8 @@ export function createBoard() {
             const next = e.target.nextElementSibling;
             if (next) next.focus();
           }
+
+          localStorage.setItem("sudokuBoard", JSON.stringify(board));
 
           const allFilled = Array.from(
             document.querySelectorAll(".cell")
@@ -105,19 +120,44 @@ export function displaySolution(solvedBoard) {
   return solvedBoard;
 }
 
-export function autoCompleteBoard() {
-  const defaultBoard = [
-    [5, 3, 0, 0, 7, 0, 0, 0, 0],
-    [6, 0, 0, 1, 9, 5, 0, 0, 0],
-    [0, 9, 8, 0, 0, 0, 0, 6, 0],
-    [8, 0, 0, 0, 6, 0, 0, 0, 3],
-    [4, 0, 0, 8, 0, 3, 0, 0, 1],
-    [7, 0, 0, 0, 2, 0, 0, 0, 6],
-    [0, 6, 0, 0, 0, 0, 2, 8, 0],
-    [0, 0, 0, 4, 1, 9, 0, 0, 5],
-    [0, 0, 0, 0, 8, 0, 0, 7, 9],
-  ];
+export function loadExample(difficulty) {
+  const sudokuBoards = {
+    facil: [
+      [5, 3, 0, 0, 7, 0, 0, 0, 0],
+      [6, 0, 0, 1, 9, 5, 0, 0, 0],
+      [0, 9, 8, 0, 0, 0, 0, 6, 0],
+      [8, 0, 0, 0, 6, 0, 0, 0, 3],
+      [4, 0, 0, 8, 0, 3, 0, 0, 1],
+      [7, 0, 0, 0, 2, 0, 0, 0, 6],
+      [0, 6, 0, 0, 0, 0, 2, 8, 0],
+      [0, 0, 0, 4, 1, 9, 0, 0, 5],
+      [0, 0, 0, 0, 8, 0, 0, 7, 9],
+    ],
+    medio: [
+      [0, 0, 0, 6, 0, 0, 4, 0, 0],
+      [7, 0, 0, 0, 0, 3, 6, 0, 0],
+      [0, 0, 0, 0, 9, 1, 0, 8, 0],
+      [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 5, 0, 1, 8, 0, 0, 0, 3],
+      [0, 0, 0, 3, 0, 6, 0, 4, 5],
+      [0, 4, 0, 2, 0, 0, 0, 6, 0],
+      [9, 0, 3, 0, 0, 0, 0, 0, 0],
+      [0, 2, 0, 0, 0, 0, 1, 0, 0],
+    ],
+    dificil: [
+      [0, 0, 0, 0, 0, 0, 0, 1, 2],
+      [0, 0, 0, 0, 3, 5, 0, 0, 0],
+      [0, 0, 0, 6, 0, 0, 0, 7, 0],
+      [7, 0, 0, 0, 0, 0, 3, 0, 0],
+      [0, 0, 0, 4, 0, 0, 8, 0, 0],
+      [1, 0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 2, 0, 0, 0, 0],
+      [0, 8, 0, 0, 0, 0, 0, 4, 0],
+      [0, 5, 0, 0, 0, 0, 6, 0, 0],
+    ],
+  };
 
+  const defaultBoard = sudokuBoards[difficulty];
   const inputs = document.querySelectorAll(".cell");
 
   inputs.forEach((input) => {
@@ -136,7 +176,7 @@ export function autoCompleteBoard() {
     }
   });
 
-  showMessage("Ejemplo cargado", "info");
+  showMessage("Tablero cargado", "info");
 }
 
 export function cleanBoard() {
@@ -147,6 +187,7 @@ export function cleanBoard() {
     input.classList.remove("fixed");
   });
 
+  localStorage.removeItem("sudokuBoard");
   showMessage("Tablero limpiado", "info");
 }
 

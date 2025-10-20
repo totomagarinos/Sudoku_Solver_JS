@@ -146,6 +146,29 @@ h1 {
   flex-wrap: wrap;
 }
 
+select {
+  width: 50%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  background: white;
+  color: #2d3748;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+select:hover {
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+}
+
+select:focus {
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
 button {
   color: #fff;
   padding: 14px 28px;
@@ -173,11 +196,11 @@ button {
   transform: translateY(0);
 }
 
-.auto-complete-btn {
+.load-example-btn {
   background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
 }
 
-.auto-complete-btn:hover {
+.load-example-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(245, 87, 108, 0.4);
 }

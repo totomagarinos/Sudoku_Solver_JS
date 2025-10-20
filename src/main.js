@@ -2,10 +2,10 @@ import {
   createBoard,
   getBoardValues,
   displaySolution,
-  autoCompleteBoard,
   isBoardEmpty,
   cleanBoard,
   showMessage,
+  loadExample,
 } from "./board";
 import { solveSudoku } from "./solver";
 
@@ -15,7 +15,7 @@ document.getElementById("solveButton").addEventListener("click", () => {
   if (isBoardEmpty(board)) {
     showMessage(
       "El tablero está vacío. Ingresá algunos números antes de resolver.",
-      "error",
+      "error"
     );
   } else if (solveSudoku(board)) {
     displaySolution(board);
@@ -25,19 +25,11 @@ document.getElementById("solveButton").addEventListener("click", () => {
 });
 
 document
-  .getElementById("autoCompleteButton")
-  .addEventListener("click", autoCompleteBoard);
+  .getElementById("loadExampleButton")
+  .addEventListener("change", (event) => {
+    loadExample(event.target.value);
+  });
 
 document.getElementById("resetButton").addEventListener("click", cleanBoard);
-
-// document.getElementById("checkButton").addEventListener("click", () => {
-//   const board = getBoardValues();
-//
-//   if (isSolvedCorrectly(board)) {
-//     showMessage("Sudoku resuelto correctamente!", "success");
-//   } else {
-//     showMessage("Sudoku mal resuelto, hay valores no válidos.", "error");
-//   }
-// });
 
 createBoard();
