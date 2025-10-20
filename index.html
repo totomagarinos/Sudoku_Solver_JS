@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/Sudoku_Solver_JS/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>sudoku-solver</title>
+    <script type="module" crossorigin src="/Sudoku_Solver_JS/assets/index-DA9QUOeX.js"></script>
+    <link rel="stylesheet" crossorigin href="/Sudoku_Solver_JS/assets/index-B3RoKFeh.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">Sudoku Solver</h1>
+      <p class="subtitle">Juega o resuelve cualquier Sudoku</p>
+
+      <div class="board-container">
+        <div class="sudoku-board" id="board"></div>
+      </div>
+
+      <div class="controls">
+        <div class="button-group">
+          <select class="load-example-btn" id="loadExampleButton">
+            <option value="">-- Cargar tablero --</option>
+            <option value="facil">Fácil</option>
+            <option value="medio">Medio</option>
+            <option value="dificil">Difícil</option>
+          </select>
+          <button class="reset-btn" id="resetButton">Limpiar</button>
+        </div>
+        <button class="solve-btn" id="solveButton">Resolver Sudoku</button>
+      </div>
+
+      <div id="statusMessage"></div>
+    </div>
+
+  </body>
+</html>
