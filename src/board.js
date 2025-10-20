@@ -185,6 +185,7 @@ export function cleanBoard() {
   inputs.forEach((input) => {
     input.value = "";
     input.classList.remove("fixed");
+    input.classList.remove("invalid");
   });
 
   localStorage.removeItem("sudokuBoard");
